@@ -1,16 +1,16 @@
-// config/db.js
-const mysql = require('mysql');
+const mysql = require('mysql2');
 
-const connection = mysql.createConnection({
+const dbConnection = mysql.createPool({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'Formations',
-  dialect: 'mysql',
-  logging: false,
+  database: 'db_pfe',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
-connection.connect((err) => {
+dbConnection.getConnection((err, connection) => {
   if (err) {
     console.error('Database connection failed: ' + err.stack);
     return;
@@ -18,4 +18,4 @@ connection.connect((err) => {
   console.log('Connected to database.');
 });
 
-module.exports = connection;
+module.exports = dbConnection;
