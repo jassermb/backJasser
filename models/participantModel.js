@@ -1,15 +1,6 @@
-const db = require('../config/db');
 const bcrypt = require('bcrypt');
 
-const saltRounds = 10; // Nombre de rounds de salage pour bcrypt
 
-const Participant = {
-  register: (participantData, callback) => {
-    // Hash du mot de passe avant de l'insérer dans la base de données
-    bcrypt.hash(participantData.password, saltRounds, (err, hashedPassword) => {
-      if (err) {
-        return callback(err);
-      }
 
       db.query(
         'INSERT INTO user (nom, prenom, email, password) VALUES (?, ?, ?, ?)',
